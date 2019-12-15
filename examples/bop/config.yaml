@@ -13,7 +13,8 @@
   },
   "global": {
     "all": {
-      "output_dir": "<args:1>"
+      "output_dir": "<args:1>",
+      #"output_is_temp": False
     }
   },
   "modules": [
@@ -27,7 +28,7 @@
         "bop_dataset_path": "<args:0>",
         "mm2m": True,
         "split": "train",
-        "scene_id": 3,
+        "scene_id": "<args:2>",
         #"model_type": "reconst"
         "model_type": ""
       }

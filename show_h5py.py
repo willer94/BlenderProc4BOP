@@ -4,7 +4,7 @@ import h5py, numpy as np, cv2, os
 PATH_ = 'examples/bop/output/'
 #PATH_ = 'experiments/occlusion_linemod/output'
 
-dirs = ['lm',]
+dirs = ['lm/%06d'%idx for idx in range(1, 16)]
 #dirs = ['tless/000001',]
 # '003_cracker_box',
 # '004_sugar_box',
@@ -47,16 +47,17 @@ for d in dirs:
 
 	cv2.namedWindow('rgb', cv2.WINDOW_AUTOSIZE)
 	cv2.moveWindow('rgb', 10, 10)
-	# cv2.namedWindow('normal', cv2.WINDOW_AUTOSIZE)
-	# cv2.moveWindow('normal', 1000, 10)
+	cv2.namedWindow('normal', cv2.WINDOW_AUTOSIZE)
+	cv2.moveWindow('normal', 1000, 10)
 
 	for item in filelist:
 	    f = h5py.File(os.path.join(PATH, item))
-	    rgb = np.asarray(f.get('colors'), dtype=np.uint8)
-	    #normal = np.asarray(f.get('normals'))
+	    rgb = np.asarray(f.get('colors'), dtype=np.uint8)[:,:,:3]
+	    normal = np.asarray(f.get('normals'))[:,:,:3]
+	    
 	    print('rgb shape: ', rgb.shape, 'rgb range: ' + str(rgb.min()) + ' to ' + str(rgb.max()))
 	    cv2.imshow('rgb', rgb[:,:,::-1])
-	    #cv2.imshow('normal', normal[:,:,::-1])
+	    cv2.imshow('normal', normal[:,:,::-1])
 	    k = cv2.waitKey()
 	    if k == 27:
 	        break

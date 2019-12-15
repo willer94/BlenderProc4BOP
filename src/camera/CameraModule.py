@@ -5,7 +5,7 @@ from src.utility.Utility import Utility
 import mathutils
 import bpy
 import numpy as np
-import os
+import os, random
 
 class CameraModule(Module):
     """
@@ -38,7 +38,7 @@ class CameraModule(Module):
         Module.__init__(self, config)
         self.source_frame = self.config.get_list("source_frame", ["X", "Y", "Z"])
         self.cam_pose_collection = ItemCollection(self._add_cam_pose, self.config.get_raw_dict("default_cam_param", {}))
-
+        
     def _insert_key_frames(self, cam, cam_ob, frame_id):
         """ Insert key frames for all relevant camera attributes.
 
@@ -141,6 +141,6 @@ class CameraModule(Module):
         # Store new cam pose as next frame
         frame_id = bpy.context.scene.frame_end
         self._insert_key_frames(cam, cam_ob, frame_id)
-        self._write_cam_pose_to_file(frame_id, cam, cam_ob)
-
+        self._write_cam_pose_to_file(frame_id, cam, cam_ob)             
+        
         bpy.context.scene.frame_end = frame_id + 1

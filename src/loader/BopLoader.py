@@ -33,27 +33,29 @@ class BopLoader(Module):
     def run(self):
         bop_dataset_path = self.config.get_string("bop_dataset_path")
         scene_id = self.config.get_int("scene_id")
+        # print(scene_id)
+
         split = self.config.get_string("split", "test")
         model_type = self.config.get_string("model_type", "")
         mm2m = 0.001 if self.config.get_bool("mm2m") else 1
 
         datasets_path = os.path.dirname(bop_dataset_path)
         dataset = os.path.basename(bop_dataset_path)
-        print("bob: {}, dataset_path: {}".format(bop_dataset_path, datasets_path))
-        print("dataset: {}".format(dataset))
+        # print("bob: {}, dataset_path: {}".format(bop_dataset_path, datasets_path))
+        # print("dataset: {}".format(dataset))
 
         model_p = dataset_params.get_model_params(datasets_path, dataset, model_type=model_type if model_type else None)
         camera_p = dataset_params.get_camera_params(datasets_path, dataset)
-        print(model_p)
-        input()
+        # print(model_p)
+        # input()
 
         try:
             split_p = dataset_params.get_split_params(datasets_path, dataset, split = split)
         except ValueError:
             raise Exception("Wrong path or {} split does not exist in {}.".format(split, dataset))
 
-        print(split_p)
-        input()
+        # print(split_p)
+        # input()
         sc_gt = inout.load_scene_gt(split_p['scene_gt_tpath'].format(**{'scene_id':scene_id}))
         sc_camera = inout.load_json(split_p['scene_camera_tpath'].format(**{'scene_id':scene_id}))
 
@@ -62,9 +64,10 @@ class BopLoader(Module):
         #bpy.context.scene.render.pixel_aspect_x = self.config.get_float("pixel_aspect_x", 1) #split_p['im_size'][0] / split_p['im_size'][1])
 
         cm = CameraModule(self.config)
-        
+        idx = 0
         for i, (cam_id, insts) in enumerate(sc_gt.items()):
-
+            idx += 1
+            #if idx == 5: break
             
             cam_K = np.array(sc_camera[str(cam_id)]['cam_K']).reshape(3,3)
 
