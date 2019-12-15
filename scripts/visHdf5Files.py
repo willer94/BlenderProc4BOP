@@ -4,8 +4,8 @@ import h5py
 import argparse
 import numpy as np
 from matplotlib import pyplot as plt
-from skimage import color
 
+from skimage import color
 
 parser = argparse.ArgumentParser("Script to visualize hdf5 files")
 
@@ -24,7 +24,7 @@ def process_img(img, key):
 		img -= np.min(img)
 		max_val = np.max(img)
 		if max_val != np.inf:
-			img /= max_val 
+			img /= max_val
 		else:
 			img /= np.max(img[img != np.inf])
 		if len(img.shape) == 3:
@@ -57,7 +57,7 @@ def visFile(filePath, show=True):
 		print("The file does not exist: {}".format(args.hdf5))
 
 if isinstance(args.hdf5, basestring):
-	visFile(args.hdf5)	
+	visFile(args.hdf5)
 elif isinstance(args.hdf5, list):
 	for file in args.hdf5:
 		visFile(file, show=False)

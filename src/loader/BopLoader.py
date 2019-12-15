@@ -44,12 +44,16 @@ class BopLoader(Module):
 
         model_p = dataset_params.get_model_params(datasets_path, dataset, model_type=model_type if model_type else None)
         camera_p = dataset_params.get_camera_params(datasets_path, dataset)
+        print(model_p)
+        input()
 
         try:
             split_p = dataset_params.get_split_params(datasets_path, dataset, split = split)
         except ValueError:
             raise Exception("Wrong path or {} split does not exist in {}.".format(split, dataset))
 
+        print(split_p)
+        input()
         sc_gt = inout.load_scene_gt(split_p['scene_gt_tpath'].format(**{'scene_id':scene_id}))
         sc_camera = inout.load_json(split_p['scene_camera_tpath'].format(**{'scene_id':scene_id}))
 
@@ -58,7 +62,7 @@ class BopLoader(Module):
         #bpy.context.scene.render.pixel_aspect_x = self.config.get_float("pixel_aspect_x", 1) #split_p['im_size'][0] / split_p['im_size'][1])
 
         cm = CameraModule(self.config)
-
+        
         for i, (cam_id, insts) in enumerate(sc_gt.items()):
 
             
@@ -123,8 +127,8 @@ class BopLoader(Module):
             # no slots
             cur_obj.data.materials.append(mat)
 
-        # if cur_obj.data.vertex_colors:
-        #     color_layer = cur_obj.data.vertex_colors["Col"]
+        if cur_obj.data.vertex_colors:
+            color_layer = cur_obj.data.vertex_colors["Col"]
         return mat
 
     def _link_col_node(self, mat):

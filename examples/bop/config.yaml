@@ -1,9 +1,9 @@
 # Args: <cam_file> <obj_file> <output_dir>
 {
   "setup": {
-    "blender_install_path": "/path/to/blender",
+    "blender_install_path": "/home/willer/softwares/",
     "blender_version": "blender-2.80-linux-glibc217-x86_64",
-    "bop_toolkit_path": "/path/to/bop_toolkit",
+    "bop_toolkit_path": "/media/willer/data/BOP/bop_toolkit",
     "pip": [
       "h5py",
       "imageio",
@@ -26,8 +26,9 @@
       "config": {
         "bop_dataset_path": "<args:0>",
         "mm2m": True,
-        "split": "test",
+        "split": "train",
         "scene_id": 3,
+        #"model_type": "reconst"
         "model_type": ""
       }
     },
@@ -91,6 +92,12 @@
     #   "config": {
     #   }
     # },
+    {
+      "name": "renderer.NormalRenderer",
+      "config": {        
+        "samples": 150
+      }
+    },
     {
       "name": "renderer.RgbRenderer",
       "config": {
