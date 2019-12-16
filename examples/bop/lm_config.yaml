@@ -1,0 +1,133 @@
+# Args: <cam_file> <obj_file> <output_dir>
+{
+  "setup": {
+    "blender_install_path": "/home/willer/softwares/",
+    "blender_version": "blender-2.80-linux-glibc217-x86_64",
+    "bop_toolkit_path": "/media/willer/data/BOP/bop_toolkit",
+    "pip": [
+      "h5py",
+      "imageio",
+      "pypng==0.0.20",
+      "scipy==1.2.2"
+    ]
+  },
+  "global": {
+    "all": {
+      "output_dir": "<args:1>",
+      "output_is_temp": False
+    }
+  },
+  "modules": [
+    {
+      "name": "main.Initializer",
+      "config": {}
+    },
+    {
+      "name": "loader.BopLoader",
+      "config": {
+        "bop_dataset_path": "<args:0>",
+        "mm2m": True,
+        "split": "test",
+        "scene_id": "<args:2>",        
+        "model_type": ""
+      }
+    },
+    {
+      "name": "lighting.LightSampler",
+      "config": {
+        "lights": [
+          {
+            "location": {
+              "name": "ShellSampler",
+              "parameters": {
+                "center": [0, 0, -0.8],
+                "radius_min": 1,
+                "radius_max": 4,
+                "elevation_min": 1,
+                "elevation_max": 89
+              }
+            },
+            "type": "POINT",
+            "energy": 1000
+          }
+        ]
+      }
+    },
+    # {
+    #   "name": "lighting.LightLoader",
+    #   "config": {
+    #     "lights": [
+    #       {
+    #         "type": "AREA",
+    #         "location": [0, 0, 0],
+    #         "energy": 10000,
+    #         "shape": "SQUARE",
+    #         "size": 30
+    #       }
+    #     ]
+    #   }
+    # },
+    #   {
+    #   "name": "object.PositionSampler",
+    #   "config":{
+    #     "max_iterations": 1000,
+    #     "pos_sampler":{
+    #       "name":"Uniform3dSampler",
+    #       "parameters":{
+    #         "max":[0.1,0.1,0.8],
+    #         "min":[-0.1,-0.1,1.2]
+    #       }
+    #     },
+    #     "rot_sampler":{
+    #       "name":"Uniform3dSampler",
+    #       "parameters":{
+    #         "max":[0,0,0],
+    #         "min":[6.28,6.28,6.28]
+    #       }
+    #     }
+    #   }
+    # },
+    # {
+    #   "name": "renderer.NormalRenderer",
+    #   "config": {
+    #   }
+    # },
+    {
+      "name": "writer.ObjectStateWriter"
+    },    
+    {
+      "name": "writer.CameraStateWriter"
+    },
+    {
+      "name": "renderer.NormalRenderer",
+      "config": {        
+        "samples": 150
+      }
+    },
+    {
+      "name": "renderer.SegMapRenderer",
+      "config": {
+        "map_by": "obj"
+      }
+    },
+    {
+      "name": "renderer.RgbRenderer",
+      "config": {
+        "samples": 150
+      }
+    },
+    # {
+    #   "name": "writer.Hdf5Writer",
+    #   "config": {
+    #     "postprocessing_modules": {
+    #       "seg": [
+    #         {
+    #           "name": "postprocessing.TrimRedundantChannels",
+    #           "config": {}
+    #         }
+    #       ],          
+    #     }
+    #   }
+    # }
+  ]
+}

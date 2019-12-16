@@ -51,13 +51,14 @@ class SegMapRenderer(Renderer):
             method = self.config.get_string("map_by", "class") 
             
             if method == "class":
-                # Generated colors for each class
+                # Generated colors for each class                
                 rgbs = get_colors(bpy.data.scenes["Scene"]["num_labels"])
                 class_to_rgb = {}
                 cur_idx = 0
             else:
                 # Generated colors for each instance
                 rgbs = get_colors(len(bpy.context.scene.objects))
+                print(len(bpy.context.scene.objects), len(rgbs))
             
             hexes = [Utility.rgb_to_hex(rgb) for rgb in rgbs]
 
@@ -71,6 +72,7 @@ class SegMapRenderer(Renderer):
             bpy.data.scenes["Scene"].cycles.filter_width = 0.0
             
             for idx, obj in enumerate(bpy.context.scene.objects):
+                print(idx)
 
                 # if class specified for this object or not
                 if "category_id" in obj:

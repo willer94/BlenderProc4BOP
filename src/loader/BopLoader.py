@@ -67,7 +67,7 @@ class BopLoader(Module):
         idx = 0
         for i, (cam_id, insts) in enumerate(sc_gt.items()):
             idx += 1
-            #if idx == 5: break
+            if idx == 5: break
             
             cam_K = np.array(sc_camera[str(cam_id)]['cam_K']).reshape(3,3)
 
